@@ -1,0 +1,6 @@
+/.vscode/
+/vendor/
+/config/*
+!/config/default.ini
+/temp/*
+!/temp/.gitignore

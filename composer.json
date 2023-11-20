@@ -1,0 +1,10 @@
+{
+    "require": {
+        "harryosmar/php-restful-api-response": "^1.1"
+    },
+    "autoload": {
+        "classmap": [
+            "classes"
+        ]
+    }
+}
