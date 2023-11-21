@@ -30,7 +30,7 @@ class ProductModel
     static function stockReduce(int $id, int $substract): bool
     {
         $tbl = self::TABLE;
-        $sql = "
+        $sql = <<<SQL
             WITH chargeable AS (
                 SELECT id 
                 FROM $tbl
@@ -44,7 +44,7 @@ class ProductModel
             FROM chargeable
             WHERE $tbl.id = chargeable.id
             RETURNING $tbl.id
-        "; // подход select for update
+        SQL; // подход select for update
         $stmt = DBConnect::get()->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':sub', $substract, PDO::PARAM_INT);
@@ -55,13 +55,13 @@ class ProductModel
     /**
      * Список товаров, чисто самодеятельность
      *
-     * @param integer $offset
      * @param integer $limit
+     * @param integer $offset
      * @return Generator
      */
-    static function getProductsGen(int $offset = 0, int $limit = 1000): Generator
+    static function getProductsGen(int $limit = 1000, int $offset = 0): Generator
     {
-        $sql = 'SELECT * FROM ' . self::TABLE . ' ORDER BY id LIMIT :lmt, :oft';
+        $sql = 'SELECT * FROM ' . self::TABLE . ' ORDER BY id LIMIT :lmt OFFSET :oft';
         $stmt = DBConnect::get()->prepare($sql);
         $stmt->bindParam(':lmt', $limit, PDO::PARAM_INT);
         $stmt->bindParam(':oft', $offset, PDO::PARAM_INT);
