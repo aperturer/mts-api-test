@@ -2,57 +2,34 @@
 class Router
 {
     /**
-     * Поиск соответствия между методом/путём запроса и заданными роутами
-     * @param array набор конфигураций роутера 
+     * Поиск соответствия между методом/путём запроса и заданными маршрутами 
+     *
+     * @param Request $request     - Объект запроса
+     * @param array $routerConfigs - Набор конфигураций роутера
+     * @return void
      */
-    static function run(array $routerConfigs)
+    static function findRoute(Request $request, array $routerConfigs)
     {
-        $method = mb_strtoupper($_SERVER['REQUEST_METHOD']);
-        $path = $_REQUEST['path'] ?? '';
         foreach($routerConfigs as $route) {
-            if ($route->method == $method) {
-                $res = preg_match($route->path, $path, $matches);
+            if ($route->method == $request->method) {
+                $res = preg_match($route->path, $request->path, $matches);
                 if ($res === false) {
                     throw new Exception('Incorrect path pattern "' . $route->path . '"');
                 } elseif($res > 0) {
+                    if ($request->requestData === null) {
+                        (new ApiError())->error400([
+                            'required'  => 'Json format body',
+                            'input_data'=> $request->body,
+                        ]);
+                        return;
+                    }
                     $className = $route->class;
-                    $apiController = new $className($matches, self::getRequestData($method));
-                    $apiController->processing();
-                    $apiController->render();
+                    $apiController = new $className($matches, $request->requestData);
+                    $apiController->run();
                     return;
                 }
             }
         }
-        (new ApiNotFound([]))->render();
-    }
-
-
-    /**
-     * Получение данных запроса
-     *
-     * @param string $method
-     * @return array
-     */
-    static function getRequestData(string $method): array
-    {
-        // GET или POST: данные возвращаем как есть
-        if ($method === RouterConfig::GET) {
-            return $_GET;
-        } elseif ($method === RouterConfig::POST) {
-            return $_POST;
-        }
-    
-        // PUT, PATCH или DELETE
-        $data = [];
-        $exploded = explode('&', file_get_contents('php://input'));
-    
-        foreach($exploded as $pair) {
-            $item = explode('=', $pair);
-            if (count($item) == 2) {
-                $data[urldecode($item[0])] = urldecode($item[1]);
-            }
-        }
-    
-        return $data;
+        (new ApiError())->error404();
     }
 }

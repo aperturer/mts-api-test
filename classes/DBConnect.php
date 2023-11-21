@@ -74,8 +74,7 @@ class DBConnect
 			self::$default_conf, 
 			array_intersect_key($config, self::$default_conf)
 		));
-		$options[PDO::MYSQL_ATTR_INIT_COMMAND] = "SET NAMES '$charset'"; // надо для php < 5.4
-		$dsn = "$type:host=$host;port=$port;dbname=$dbname;charset=$charset";
+		$dsn = "$type:host=$host;port=$port;dbname=$dbname";
 		return new PDO($dsn, $user, $password, $options);
 	}
 }

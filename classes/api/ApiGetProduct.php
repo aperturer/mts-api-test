@@ -1,14 +1,18 @@
 <?php
+/**
+ * Котроллер API стоков товара
+ * GET: /product/12/stock
+ */
 class ApiGetProduct extends AbstractApi
 {
-    function processing() {
-        $product_id = $this->path[1] ?? 0;
-        if(!$product_id) {
-            $this->response = $this->response->errorNotFound();
+    function run() {
+        $productId = $this->path[1] ?? 0;
+        if(!$productId) {
+            $this->error404();
         } else {
-            $stock = ProductModel::getStock(intval($product_id));
+            $stock = ProductModel::getStock(intval($productId));
             if ($stock === null) {
-                $this->response = $this->response->errorNotFound();
+                $this->error404();
             } else {
                 $data = [
                     'stock' => $stock,
