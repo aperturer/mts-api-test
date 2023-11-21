@@ -1,5 +1,8 @@
 <?php
-
+declare(strict_types = 1);
+/**
+ * Модель для работы с таблицей товаров
+ */
 class ProductModel
 {
     const TABLE = 'products';

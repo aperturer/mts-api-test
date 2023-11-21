@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  * Контроллер списания стоков товара
  * PUT: /product/12/stock

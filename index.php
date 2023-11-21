@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 error_reporting(E_ALL);
-ini_set('ignore_repeated_errors', TRUE);
-ini_set('display_errors', FALSE);
-ini_set('log_errors', TRUE);
+ini_set('ignore_repeated_errors', '1'); // true
+ini_set('display_errors', '');          // false ¯\_(ツ)_/¯ strict types in 7.6 require it
+ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ .'/data/log/errors.log'); // все ошибки будем писать в файл
 
 require __DIR__ . '/vendor/autoload.php';
