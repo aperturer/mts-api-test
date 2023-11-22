@@ -15,7 +15,7 @@ Config::load($configFile);
 DBConnect::add(Config::get('database_section'));
 
 Router::findRoute(new Request(), [
-    new RouterConfig(Request::GET, '/^product\/(\d*)\/stock$/', 'ApiGetProduct'),    // прочитать стоки товара
-    new RouterConfig(Request::PUT, '/^product\/(\d*)\/stock$/', 'ApiUpdateProduct'), // списать со стоков товара заданное количество
-    new RouterConfig(Request::GET, '/^products$/', 'ApiProductsList'),               // показать список всех товаров для разнообразия
+    new RouterConfig(Request::GET, '/^product\/(\d*)\/stock$/', ApiGetProduct::class),    // прочитать стоки товара
+    new RouterConfig(Request::PUT, '/^product\/(\d*)\/stock$/', ApiUpdateProduct::class), // списать со стоков товара заданное количество
+    new RouterConfig(Request::GET, '/^products$/',              ApiProductsList::class),  // показать список всех товаров для разнообразия
 ]);
