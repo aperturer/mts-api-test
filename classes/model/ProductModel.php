@@ -3,7 +3,7 @@ declare(strict_types = 1);
 /**
  * Модель для работы с таблицей товаров
  */
-class ProductModel
+class ProductModel implements ProductModelInterface
 {
     const TABLE = 'products';
 
@@ -13,7 +13,7 @@ class ProductModel
      * @param integer $id
      * @return integer|null
      */
-    static function getStock(int $id): ?int
+    function getStock(int $id): ?int
     {
         $sql = 'SELECT stock FROM ' . self::TABLE . ' WHERE id = :id';
         $stmt = DBConnect::get()->prepare($sql);
@@ -30,7 +30,7 @@ class ProductModel
      * @param integer $substract - Количество единиц товара, которое пытаемся списать
      * @return boolean
      */
-    static function stockReduce(int $id, int $substract): bool
+    function stockReduce(int $id, int $substract): bool
     {
         $tbl = self::TABLE;
         $sql = <<<SQL
@@ -62,7 +62,7 @@ class ProductModel
      * @param integer $offset
      * @return Generator
      */
-    static function getProductsGen(int $limit = 1000, int $offset = 0): Generator
+    function getProductsGen(int $limit = 1000, int $offset = 0): Generator
     {
         $sql = 'SELECT * FROM ' . self::TABLE . ' ORDER BY id LIMIT :lmt OFFSET :oft';
         $stmt = DBConnect::get()->prepare($sql);

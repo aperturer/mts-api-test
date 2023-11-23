@@ -18,7 +18,7 @@ class ApiProductsList extends AbstractApi
             ],
             'products' => []
         ];
-        foreach(ProductModel::getProductsGen($limit, $offset) as $id => $row) {
+        foreach($this->productModel->getProductsGen($limit, $offset) as $id => $row) {
             $out['products'][$id] = $row;
         }
         $this->response = $this->response->withArray($out, 200);

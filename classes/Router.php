@@ -3,6 +3,15 @@ declare(strict_types = 1);
 
 class Router
 {
+    protected $productModel;
+    protected $request;
+
+    function __construct(ProductModelInterface $productModel, Request $request)
+    {
+        $this->productModel = $productModel;
+        $this->request = $request;
+    }
+
     /**
      * Поиск соответствия между методом/путём запроса и заданными маршрутами 
      *
@@ -10,28 +19,28 @@ class Router
      * @param array $routerConfigs - Набор конфигураций роутера
      * @return void
      */
-    static function findRoute(Request $request, array $routerConfigs)
+    function route(array $routerConfigs)
     {
         foreach($routerConfigs as $route) {
-            if ($route->method == $request->method) {
-                $res = preg_match($route->path, $request->path, $matches);
+            if ($route->method == $this->request->getMethod()) {
+                $res = preg_match($route->path, $this->request->getPath(), $matches);
                 if ($res === false) {
                     throw new Exception('Incorrect path pattern "' . $route->path . '"');
                 } elseif($res > 0) {
-                    if ($request->requestData === null) {
-                        (new ApiError())->error400([
+                    if ($this->request->getData() === null) {
+                        (new ApiError($this->productModel))->error400([
                             'required'  => 'Json format body',
-                            'input_data'=> $request->body,
+                            'input_data'=> $this->request->getBody(),
                         ]);
                         return;
                     }
                     $className = $route->class;
-                    $apiController = new $className($matches, $request->requestData);
+                    $apiController = new $className($this->productModel, $matches, $this->request->getData());
                     $apiController->run();
                     return;
                 }
             }
         }
-        (new ApiError())->error404();
+        (new ApiError($this->productModel))->error404();
     }
 }

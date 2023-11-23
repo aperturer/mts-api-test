@@ -28,7 +28,7 @@ class ApiUpdateProduct extends AbstractApi
             $attempt = $this->attempts; 
             while ($attempt-- && !($success = ProductModel::stockReduce($productId, $charge))) {
                 // тут мы окажемся только если что-то пошло не так и есть ещё попытки
-                $stock = ProductModel::getStock($productId);
+                $stock = $this->productModel->getStock($productId);
                 if (is_null($stock)) { // а нет такого товара
                     $this->error404();
                     return;

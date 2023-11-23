@@ -11,7 +11,7 @@ class ApiGetProduct extends AbstractApi
         if(!$productId) {
             $this->error404();
         } else {
-            $stock = ProductModel::getStock(intval($productId));
+            $stock = $this->productModel->getStock(intval($productId));
             if ($stock === null) {
                 $this->error404();
             } else {

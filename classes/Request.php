@@ -12,31 +12,10 @@ class Request
     const PATCH  = 'PATCH';  // Update/Modify
     const DELETE = 'DELETE'; // Delete
 
-    /**
-     * Метод (тип) запроса
-     *
-     * @var string
-     */
-    public $method;
-
-    /**
-     * Данные запроса. Если не распарсились в json то null
-     *
-     * @var array|null
-     */
-    public $requestData;
-
-    /**
-     * Тело запроса, если есть
-     *
-     * @var string|false|null
-     */
-    public $body;
-
-    /** 
-     * Путь из урла запроса
-     */
-    public $path;
+    private $method;
+    private $requestData;
+    private $body;
+    private $path;
 
     function __construct()
     {
@@ -55,15 +34,59 @@ class Request
             case self::PUT:
             case self::PATCH:
             case self::DELETE:
-                if ($this->body = file_get_contents('php://input')) {
+                if ($this->body = file_get_contents('php://input') ?: null) {
                     $data = json_decode($this->body, true);
-                    $this->requestData = json_last_error() === JSON_ERROR_NONE ? $data : null;
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $this->requestData = is_array($data) ? $data : [$data];
+                    } else {
+                        $this->requestData = null;
+                    }
                 } else {
-                    $this->requestData = '';
+                    $this->requestData = [];
                 }
                 break;
             default:
                 throw new Exception("Incorrect request method: '{$this->method}'");
         }
+    }
+
+    /**
+     * Метод (тип) запроса
+     *
+     * @return string
+     */
+    function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * Данные запроса. Если не распарсились в json то null
+     *
+     * @return array|null
+     */
+    function getData(): ?array
+    {
+        return $this->requestData;
+    }
+
+    /**
+     * Тело запроса, если есть
+     *
+     * @return string|null
+     */
+    function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    /**
+     * Путь из урла запроса
+     *
+     * @return string
+     */
+    function getPath(): string
+    {
+        return $this->path;
     }
 }

@@ -1,5 +1,8 @@
 <?php
 declare(strict_types = 1);
+
+use Aura\Di\ContainerBuilder;
+
 error_reporting(E_ALL);
 ini_set('ignore_repeated_errors', '1'); // true
 ini_set('display_errors', '');          // false ¯\_(ツ)_/¯ strict types in 7.6 require it
@@ -14,7 +17,13 @@ Config::load($configFile);
 
 DBConnect::add(Config::get('database_section'));
 
-Router::findRoute(new Request(), [
+$builder = new ContainerBuilder();
+$di = $builder->newInstance($builder::AUTO_RESOLVE);
+$di->params[Router::class]['productModel'] = $di->lazyNew(ProductModel::class);
+$di->params[Router::class]['request'] = $di->lazyNew(Request::class);
+
+$router = $di->newInstance(Router::class);
+$router->route([
     new RouterConfig(Request::GET, '/^product\/(\d*)\/stock$/', ApiGetProduct::class),    // прочитать стоки товара
     new RouterConfig(Request::PUT, '/^product\/(\d*)\/stock$/', ApiUpdateProduct::class), // списать со стоков товара заданное количество
     new RouterConfig(Request::GET, '/^products$/',              ApiProductsList::class),  // показать список всех товаров для разнообразия
