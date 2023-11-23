@@ -19,12 +19,15 @@ DBConnect::add(Config::get('database_section'));
 
 $builder = new ContainerBuilder();
 $di = $builder->newInstance($builder::AUTO_RESOLVE);
-$di->params[Router::class]['productModel'] = $di->lazyNew(ProductModel::class);
 $di->params[Router::class]['request'] = $di->lazyNew(Request::class);
+$di->setters['ProductModelTrait']['setProductModel'] = $di->lazyNew(ProductModel::class);
 
 $router = $di->newInstance(Router::class);
-$router->route([
+list($class, $method, $params) = $router->route([
     new RouterConfig(Request::GET, '/^product\/(\d*)\/stock$/', ApiGetProduct::class),    // прочитать стоки товара
     new RouterConfig(Request::PUT, '/^product\/(\d*)\/stock$/', ApiUpdateProduct::class), // списать со стоков товара заданное количество
     new RouterConfig(Request::GET, '/^products$/',              ApiProductsList::class),  // показать список всех товаров для разнообразия
 ]);
+
+$apiController = $di->newInstance($class);
+call_user_func_array([$apiController, $method], $params);

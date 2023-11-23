@@ -6,6 +6,8 @@ declare(strict_types = 1);
  */
 class ApiGetProduct extends AbstractApi
 {
+    use ProductModelTrait;
+
     function run() {
         $productId = $this->path[1] ?? 0;
         if(!$productId) {

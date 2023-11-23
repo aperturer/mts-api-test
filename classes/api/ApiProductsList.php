@@ -6,6 +6,8 @@ declare(strict_types = 1);
  */
 class ApiProductsList extends AbstractApi
 {
+    use ProductModelTrait;
+
     function run() {
         $limit = 100;
         $offset = 0; // TODO: потом можно добавить нормальный пейджинг по litit/offset или по id between

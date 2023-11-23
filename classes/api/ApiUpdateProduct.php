@@ -11,6 +11,8 @@ declare(strict_types = 1);
  */
 class ApiUpdateProduct extends AbstractApi
 {
+    use ProductModelTrait;
+
     private $attempts = 3; // число попыток при взаимных блокировках
 
     function run() {

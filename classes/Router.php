@@ -3,12 +3,10 @@ declare(strict_types = 1);
 
 class Router
 {
-    protected $productModel;
-    protected $request;
+    protected Request $request;
 
-    function __construct(ProductModelInterface $productModel, Request $request)
+    function __construct(Request $request)
     {
-        $this->productModel = $productModel;
         $this->request = $request;
     }
 
@@ -17,9 +15,9 @@ class Router
      *
      * @param Request $request     - Объект запроса
      * @param array $routerConfigs - Набор конфигураций роутера
-     * @return void
+     * @return array
      */
-    function route(array $routerConfigs)
+    function route(array $routerConfigs): array
     {
         foreach($routerConfigs as $route) {
             if ($route->method == $this->request->getMethod()) {
@@ -28,19 +26,18 @@ class Router
                     throw new Exception('Incorrect path pattern "' . $route->path . '"');
                 } elseif($res > 0) {
                     if ($this->request->getData() === null) {
-                        (new ApiError($this->productModel))->error400([
+                        return [ApiError::class, 'error400', [[
                             'required'  => 'Json format body',
                             'input_data'=> $this->request->getBody(),
-                        ]);
-                        return;
+                        ]]];
                     }
-                    $className = $route->class;
-                    $apiController = new $className($this->productModel, $matches, $this->request->getData());
-                    $apiController->run();
-                    return;
+                    // $className = $route->class;
+                    // $apiController = new $className($matches, $this->request->getData());
+                    // $apiController->run();
+                    return [$route->class, 'run', [$matches, $this->request->getData()]];
                 }
             }
         }
-        (new ApiError($this->productModel))->error404();
+        return [ApiError::class, 'error404', []];
     }
 }

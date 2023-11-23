@@ -36,22 +36,14 @@ abstract class AbstractApi
     protected bool $rendered;
 
     /**
-     * Модель для работы с товарами
-     *
-     * @var ProductModelInterface
-     */
-    protected ProductModelInterface $productModel;
-
-    /**
      * Конструктор
      * 
      * @param ProductModelInterface модель для работы с товарами
      * @param array $path - Массив match из разбора урла регуляркой
      * @param array $data - Данные из тела запроса
      */
-    function __construct(ProductModelInterface $productModel, array $path = [], array $data = []) 
+    function __construct(array $path = [], array $data = []) 
     {
-        $this->productModel = $productModel;
         $this->path = $path;
         $this->data = $data;
         $this->response = new Response();

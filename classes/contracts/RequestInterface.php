@@ -1,6 +1,9 @@
 <?php
 declare(strict_types = 1);
 
+/**
+ * Интерфейс входящего запроса, или его эмуляции
+ */
 interface RequestInterface
 {
     /**
