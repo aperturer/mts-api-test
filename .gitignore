@@ -2,5 +2,6 @@
 /vendor/
 /config/*
 !/config/default.ini
+!/config/init.php
 /temp/*
 !/temp/.gitignore

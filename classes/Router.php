@@ -1,6 +1,9 @@
 <?php
 declare(strict_types = 1);
 
+/**
+ * Маршрутизатор входящего запроса
+ */
 class Router
 {
     protected Request $request;
