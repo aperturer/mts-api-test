@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e20b4a864ea0838edd5f0450929eb276",
+    "content-hash": "29a5e1822d90c0e569f0139e012f3fe3",
     "packages": [
         {
             "name": "aura/di",
@@ -62,128 +62,6 @@
                 "source": "https://github.com/auraphp/Aura.Di/tree/4.2.1"
             },
             "time": "2022-01-04T21:37:03+00:00"
-        },
-        {
-            "name": "aura/http",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/auraphp/Aura.Http.git",
-                "reference": "6e7e71e81e4bcc93430b1b8b93f505230e4c37f6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Http/zipball/6e7e71e81e4bcc93430b1b8b93f505230e4c37f6",
-                "reference": "6e7e71e81e4bcc93430b1b8b93f505230e4c37f6",
-                "shasum": ""
-            },
-            "require": {
-                "aura/installer-default": "1.0.*",
-                "php": ">=5.4.0"
-            },
-            "type": "aura-package",
-            "autoload": {
-                "psr-0": {
-                    "Aura\\Http": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Paul M. Jones",
-                    "email": "pmjones88@gmail.com",
-                    "homepage": "http://paul-m-jones.com"
-                },
-                {
-                    "name": "Hari KT",
-                    "email": "kthari85@gmail.com",
-                    "homepage": "http://harikt.com"
-                },
-                {
-                    "name": "Aura.Http Contributors",
-                    "homepage": "https://github.com/auraphp/Aura.Http/contributors"
-                },
-                {
-                    "name": "Galactic Void",
-                    "email": "galacticvoid+git@gmail.com",
-                    "homepage": "https://github.com/galactic-void"
-                },
-                {
-                    "name": "Pascal Borreli",
-                    "email": "pascal@borreli.com"
-                },
-                {
-                    "name": "Brandon Savage",
-                    "email": "brandon@brandonsavage.net",
-                    "homepage": "http://brandonsavage.net"
-                }
-            ],
-            "description": "The Aura HTTP package provides objects to build and send HTTP requests and responses.",
-            "homepage": "http://auraphp.com/Aura.Http",
-            "keywords": [
-                "client",
-                "http",
-                "http client",
-                "http request",
-                "http response",
-                "http transport",
-                "request",
-                "response",
-                "transport"
-            ],
-            "support": {
-                "issues": "https://github.com/auraphp/Aura.Http/issues",
-                "source": "https://github.com/auraphp/Aura.Http/tree/1.0.3"
-            },
-            "time": "2014-05-31T00:00:00+00:00"
-        },
-        {
-            "name": "aura/installer-default",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/auraphp/installer-default.git",
-                "reference": "52f8de3670cc1ef45a916f40f732937436d028c8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/installer-default/zipball/52f8de3670cc1ef45a916f40f732937436d028c8",
-                "reference": "52f8de3670cc1ef45a916f40f732937436d028c8",
-                "shasum": ""
-            },
-            "type": "composer-installer",
-            "extra": {
-                "class": "Aura\\Composer\\DefaultInstaller"
-            },
-            "autoload": {
-                "psr-0": {
-                    "Aura\\Composer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Paul M. Jones",
-                    "email": "pmjones88@gmail.com",
-                    "homepage": "http://paul-m-jones.com"
-                }
-            ],
-            "description": "Installs Aura packages using the Composer defaults.",
-            "keywords": [
-                "aura",
-                "installer"
-            ],
-            "support": {
-                "issues": "https://github.com/auraphp/installer-default/issues",
-                "source": "https://github.com/auraphp/installer-default/tree/1.0.0"
-            },
-            "time": "2012-11-26T21:35:57+00:00"
         },
         {
             "name": "harryosmar/php-restful-api-response",
