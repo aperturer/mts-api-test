@@ -21,6 +21,6 @@
 
 ## Внешние зависимости:
 
-- composer (из которого используется class_loader)
+- [Composer](https://getcomposer.org/) (из которого используется class_loader)
 - [harryosmar/php-restful-api-response](https://github.com/harryosmar/php-restful-api-response) (класс формирования данных для ответа)
 - [Aura.Di](https://github.com/auraphp/Aura.Di) (Система инъекции зависимостей на базе IoC контейнера)
