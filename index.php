@@ -30,4 +30,4 @@ list($class, $method, $params) = $router->route([
 ]);
 
 $apiController = $di->newInstance($class);
-call_user_func_array([$apiController, $method], $params);
+$apiController->$method(...$params);
