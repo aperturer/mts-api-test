@@ -15,7 +15,7 @@ class Router
      *
      * @param Request $request     - Объект запроса
      * @param array $routerConfigs - Набор конфигураций роутера
-     * @return array
+     * @return array - Кортеж из класса, метода и массива аргументов выбранного роутером апи
      */
     function route(array $routerConfigs): array
     {
@@ -31,9 +31,6 @@ class Router
                             'input_data'=> $this->request->getBody(),
                         ]]];
                     }
-                    // $className = $route->class;
-                    // $apiController = new $className($matches, $this->request->getData());
-                    // $apiController->run();
                     return [$route->class, 'run', [$matches, $this->request->getData()]];
                 }
             }
