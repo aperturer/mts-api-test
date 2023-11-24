@@ -15,14 +15,14 @@ class ApiUpdateProduct extends AbstractApi
 
     private $attempts = 3; // число попыток при взаимных блокировках
 
-    function run() {
-        $productId = intval($this->path[1] ?? 0);
-        $charge = intval($this->data['stock_charge'] ?? 0);
+    function run(array $path = [], array $data = []) {
+        $productId = intval($path[1] ?? 0);
+        $charge = intval($data['stock_charge'] ?? 0);
 
         if (!$productId) {
             $this->error404();
         } elseif (!$charge || $charge < 1) {
-            $error = isset($this->data['stock_charge']) ? 
+            $error = isset($data['stock_charge']) ? 
                 ['wrong_value' => 'Value stock_charge must be greater than zero'] :
                 ['missing_parameter' => 'Required parameter stock_charge is missing in request body'];
             $this->error400($error);

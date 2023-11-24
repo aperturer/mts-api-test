@@ -8,20 +8,6 @@ use PhpRestfulApiResponse\Response;
 abstract class AbstractApi
 {
     /**
-     * Массив match из разбора урла регуляркой
-     *
-     * @var array
-     */
-    protected array $path;
-
-    /**
-     * Массив данных из тела запроса (декодированный из json)
-     *
-     * @var array
-     */
-    protected array $data;
-
-    /**
      * Экземпляр объекта ответа
      *
      * @var Responce
@@ -39,23 +25,21 @@ abstract class AbstractApi
      * Конструктор
      * 
      * @param ProductModelInterface модель для работы с товарами
-     * @param array $path - Массив match из разбора урла регуляркой
-     * @param array $data - Данные из тела запроса
      */
     function __construct(array $path = [], array $data = []) 
     {
-        $this->path = $path;
-        $this->data = $data;
         $this->response = new Response();
         $this->rendered = false;
     }
 
     /**
      * Главный метод контроллера, в котором происходит формирование нужного ответа
+     * @param array $path - Массив match из разбора урла регуляркой
+     * @param array $data - Данные из тела запроса
      *
      * @return void
      */
-    abstract function run(); 
+    abstract function run(array $path = [], array $data = []); 
 
     /**
      * Генератор ответа 404 (не найдено)

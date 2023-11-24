@@ -5,7 +5,7 @@ declare(strict_types = 1);
  */
 class ApiError extends AbstractApi
 {
-    function run() {
+    function run(array $path = [], array $data = []) {
         $this->error404();    
     }
 }

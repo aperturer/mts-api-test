@@ -1,11 +1,17 @@
 {
     "require": {
         "harryosmar/php-restful-api-response": "^1.1",
-        "aura/di": "^4.2"
+        "aura/di": "^4.2",
+        "aura/http": "^1.0"
     },
     "autoload": {
         "classmap": [
             "classes"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "aura/installer-default": true
+        }
     }
 }

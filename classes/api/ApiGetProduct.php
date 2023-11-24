@@ -8,8 +8,8 @@ class ApiGetProduct extends AbstractApi
 {
     use ProductModelTrait;
 
-    function run() {
-        $productId = $this->path[1] ?? 0;
+    function run(array $path = [], array $data = []) {
+        $productId = $path[1] ?? 0;
         if(!$productId) {
             $this->error404();
         } else {
@@ -17,10 +17,10 @@ class ApiGetProduct extends AbstractApi
             if ($stock === null) {
                 $this->error404();
             } else {
-                $data = [
+                $out = [
                     'stock' => $stock,
                 ];
-                $this->response = $this->response->withArray($data, 200);
+                $this->response = $this->response->withArray($out, 200);
             }
         }
     }
