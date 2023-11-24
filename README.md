@@ -13,11 +13,11 @@
 
 ## Примеры ссылок для тестирования:
 
-| Действие                        | Метод | URL                                             | Body                |
-| ------------------------------- | ----- | ----------------------------------------------- | ------------------- |
-| Получить остатки по товару id=8 | GET   | http://aperturer.temp.swtest.ru/product/8/stock |                     |
-| Списать остатки 5 ед. с id=8    | PUT   | http://aperturer.temp.swtest.ru/product/8/stock | {"stock_charge": 5} |
-| Получить список всех товаров    | GET   | http://aperturer.temp.swtest.ru/products        |                     |
+| Метод | URL                                             | Body                |
+ ----- | ----------------------------------------------- | ------------------- |
+| GET   | http://aperturer.temp.swtest.ru/product/8/stock <br>Получить остатки по товару id=8 |                     |
+| PUT   | http://aperturer.temp.swtest.ru/product/8/stock <br>Списать остатки 5 ед. с id=8 | {"stock_charge": 5} |
+| GET   | http://aperturer.temp.swtest.ru/products <br>Получить список всех товаров |                     |
 
 ## Внешние зависимости:
 
