@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 /**
  * Входящий запрос
  */
@@ -17,20 +18,20 @@ class Request
     private $body;
     private $path;
 
-    function __construct()
+    public function __construct()
     {
         $this->path = $_REQUEST['path'] ?? '';
         $this->method = mb_strtoupper($_SERVER['REQUEST_METHOD'] ?? 'NONE');
-        
-        switch($this->method){
-            // GET или POST: данные возвращаем как есть
+
+        switch ($this->method) {
+                // GET или POST: данные возвращаем как есть
             case self::GET:
                 $this->requestData = $_GET;
                 break;
             case self::POST:
                 $this->requestData = $_POST;
                 break;
-            // PUT, PATCH или DELETE: берём json из тела запроса    
+                // PUT, PATCH или DELETE: берём json из тела запроса    
             case self::PUT:
             case self::PATCH:
             case self::DELETE:
@@ -55,7 +56,7 @@ class Request
      *
      * @return string
      */
-    function getMethod(): string
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -65,7 +66,7 @@ class Request
      *
      * @return array|null
      */
-    function getData(): ?array
+    public function getData(): ?array
     {
         return $this->requestData;
     }
@@ -75,7 +76,7 @@ class Request
      *
      * @return string|null
      */
-    function getBody(): ?string
+    public function getBody(): ?string
     {
         return $this->body;
     }
@@ -85,7 +86,7 @@ class Request
      *
      * @return string
      */
-    function getPath(): string
+    public function getPath(): string
     {
         return $this->path;
     }

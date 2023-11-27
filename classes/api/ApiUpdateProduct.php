@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 /**
  * Контроллер списания стоков товара
  * PUT: /product/12/stock
@@ -7,7 +8,7 @@ declare(strict_types = 1);
  * {"stock_charge": 5}
  * 
  * TODO: тут не помешала бы авторизация, лог запросов и номер запроса клиента (который он ведёт у себя), 
- * чтобы не повторять успешное списание, на которое он не получил ответ.
+ * чтобы не повторять успешное сSписание, на которое он не получил ответ.
  */
 class ApiUpdateProduct extends AbstractApi
 {
@@ -15,19 +16,20 @@ class ApiUpdateProduct extends AbstractApi
 
     private $attempts = 3; // число попыток при взаимных блокировках
 
-    function run(array $path = [], array $data = []) {
+    public function run(array $path = [], array $data = [])
+    {
         $productId = intval($path[1] ?? 0);
         $charge = intval($data['stock_charge'] ?? 0);
 
         if (!$productId) {
             $this->error404();
         } elseif (!$charge || $charge < 1) {
-            $error = isset($data['stock_charge']) ? 
+            $error = isset($data['stock_charge']) ?
                 ['wrong_value' => 'Value stock_charge must be greater than zero'] :
                 ['missing_parameter' => 'Required parameter stock_charge is missing in request body'];
             $this->error400($error);
         } else {
-            $attempt = $this->attempts; 
+            $attempt = $this->attempts;
             while ($attempt-- && !($success = ProductModel::stockReduce($productId, $charge))) {
                 // тут мы окажемся только если что-то пошло не так и есть ещё попытки
                 $stock = $this->productModel->getStock($productId);
@@ -36,7 +38,7 @@ class ApiUpdateProduct extends AbstractApi
                     return;
                 } elseif ($stock < $charge) { // попытка списать больше, чем в наличии
                     $this->response = $this->response->withError([
-                        'wrong_parameter' => "stock_charge must be greater than stock", 
+                        'wrong_parameter' => "stock_charge must be greater than stock",
                         'stock_charge' => $charge,
                         'stock' => $stock,
                     ], 412);
@@ -57,6 +59,6 @@ class ApiUpdateProduct extends AbstractApi
             } else {
                 $this->response = $this->response->withError(['db_locked' => 'Try again later'], 503);
             }
-        }        
+        }
     }
 }

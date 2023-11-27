@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 /**
  * Класс для работы с PDO-подключениями к базе.
  * Сначала вызываем add и сохраняем конфигурацию - одномерный массив 
@@ -48,12 +49,12 @@ class DBConnect
 	 */
 	public static function get(string $name = ''): PDO
 	{
-		if(!isset(self::$configs[$name])){
-			if($name) throw new Exception("Error! No exist connection $name");
-			if(!self::$configs) throw new Exception('Error! No connections!');
+		if (!isset(self::$configs[$name])) {
+			if ($name) throw new Exception("Error! No exist connection $name");
+			if (!self::$configs) throw new Exception('Error! No connections!');
 			list($name) = array_keys(self::$configs);
 		}
-		if(!isset(self::$connects[$name])){
+		if (!isset(self::$connects[$name])) {
 			self::$connects[$name] = self::connect(self::$configs[$name]);
 		}
 		return self::$connects[$name];
@@ -72,7 +73,7 @@ class DBConnect
 			array_diff_key($config, self::$default_conf) // чего нет в default_conf - пойдёт в options
 		);
 		extract(array_merge( // безопасно - только ключи из default_conf
-			self::$default_conf, 
+			self::$default_conf,
 			array_intersect_key($config, self::$default_conf)
 		));
 		$dsn = "$type:host=$host;port=$port;dbname=$dbname";

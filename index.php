@@ -1,12 +1,13 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 use Aura\Di\ContainerBuilder;
 
 require __DIR__ . '/vendor/autoload.php'; // Composer class autoloader
 
 // Базовая инициализация
-require __DIR__ . '/config/init.php'; 
+require __DIR__ . '/config/init.php';
 
 // Настройка контейнера
 $builder = new ContainerBuilder();

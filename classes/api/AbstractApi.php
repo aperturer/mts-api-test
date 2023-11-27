@@ -1,6 +1,8 @@
 <?php
-declare(strict_types = 1);
-use PhpRestfulApiResponse\Response; 
+
+declare(strict_types=1);
+
+use PhpRestfulApiResponse\Response;
 
 /**
  * Абстрактный класс контроллера API
@@ -26,7 +28,7 @@ abstract class AbstractApi
      * 
      * @param ProductModelInterface модель для работы с товарами
      */
-    function __construct(array $path = [], array $data = []) 
+    public function __construct(array $path = [], array $data = [])
     {
         $this->response = new Response();
         $this->rendered = false;
@@ -39,14 +41,14 @@ abstract class AbstractApi
      *
      * @return void
      */
-    abstract function run(array $path = [], array $data = []); 
+    abstract public function run(array $path = [], array $data = []);
 
     /**
      * Генератор ответа 404 (не найдено)
      *
      * @return void
      */
-    function error404() 
+    public function error404()
     {
         $this->response = $this->response->errorNotFound();
     }
@@ -58,7 +60,7 @@ abstract class AbstractApi
      * @param array $message - Сообщение ответа
      * @return void
      */
-    function error400(array $message)
+    public function error400(array $message)
     {
         $this->response = $this->response->errorWrongArgs($message);
     }
@@ -68,7 +70,8 @@ abstract class AbstractApi
      *
      * @return void
      */
-    function render() {
+    public function render()
+    {
         header('HTTP/1.0 ' . $this->response->getStatusCode() . ' ' . $this->response->getReasonPhrase());
         header('Content-Type: application/json');
         echo $this->response->getBody();
@@ -78,7 +81,7 @@ abstract class AbstractApi
     /**
      * Деструктор, делающий вызов render необязательным
      */
-    function __destruct()
+    public function __destruct()
     {
         if (!$this->rendered) {
             $this->render();

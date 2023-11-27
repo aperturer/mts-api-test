@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /**
  * Интерфейс входящего запроса, или его эмуляции
@@ -10,27 +11,27 @@ interface RequestInterface
      * Метод (тип) запроса
      *
      * @return string
-     */    
-    function getMethod(): string;
+     */
+    public function getMethod(): string;
 
     /**
      * Данные запроса. Если не распарсились в json то null
      *
      * @return array|null
      */
-    function getData(): ?array;
+    public function getData(): ?array;
 
     /**
      * Тело запроса, если есть
      *
      * @return string|null
      */
-    function getBody(): ?string;
+    public function getBody(): ?string;
 
     /**
      * Путь из урла запроса
      *
      * @return string
      */
-    function getPath(): string;
+    public function getPath(): string;
 }

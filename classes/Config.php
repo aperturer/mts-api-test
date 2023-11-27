@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 /** 
  * Точка хранения конфигурации в системе. Не синглтон, так что можно менять под тесты например
  * Конфигурация читается из ini файла и хранится в виде массива, отдавая по get запрошенную секцию (которая тоже массив)
@@ -13,10 +14,10 @@ class Config
      * Загрузка конфигурации из заданного ini-файла
      * @param string $configFileName - имя файла, из которого читается конфиг
      */
-    static function load(string $configFileName)
+    public static function load(string $configFileName)
     {
         self::$data = parse_ini_file(self::CONFIG_PATH . $configFileName, true, INI_SCANNER_TYPED);
-        
+
         if (!isset(self::$data)) {
             throw new Exception('Config not loaded');
         } elseif (!isset(self::$data['main'])) {
@@ -33,16 +34,15 @@ class Config
      * @param string $offset - ключ, по которому запрашиваются данные из секции main, либо database_section, отдающий всю секцию бд 
      * @return mixed
      */
-    static function get(string $offset)
+    public static function get(string $offset)
     {
         switch ($offset) {
-            case 'database_section': 
+            case 'database_section':
                 return self::$data[self::$data['main']['database']];
-            default:    
+            default:
                 if (!isset(self::$data['main'][$offset])) {
                     throw new Exception("No key '$offset' in config main section");
-                }
-                else return self::$data['main'][$offset];
+                } else return self::$data['main'][$offset];
         }
     }
 }
