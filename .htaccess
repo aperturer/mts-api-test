@@ -1,4 +1,11 @@
+## Запрет просмотра папок
+Options All -Indexes
+## Перенаправление запросов на index.php
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /index.php?path=$1 [NC,L,QSA]
+## Не давать смотреть настройки и другое
+<FilesMatch "(.(htaccess|json|ini|log|sh|sql|lock)|~)$">
+Require all denied
+</FilesMatch>
