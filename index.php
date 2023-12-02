@@ -18,9 +18,9 @@ $di->setters['ProductModelTrait']['setProductModel'] = $di->lazyNew(ProductModel
 // Бизнес-логика
 $router = $di->newInstance(Router::class);
 list($class, $method, $params) = $router->route([
-    new RouterConfig(Request::GET, '/^product\/(\d*)\/stock$/', ApiGetProduct::class),    // прочитать стоки товара
-    new RouterConfig(Request::PUT, '/^product\/(\d*)\/stock$/', ApiUpdateProduct::class), // списать со стоков товара заданное количество
-    new RouterConfig(Request::GET, '/^products$/',              ApiProductsList::class),  // показать список всех товаров для разнообразия
+    new RouterConfig(Request::GET,   '/^products\/(\d*)\/stock$/', ApiGetProduct::class),    // прочитать стоки товара
+    new RouterConfig(Request::PATCH, '/^products\/(\d*)\/stock$/', ApiUpdateProduct::class), // списать со стоков товара заданное количество
+    new RouterConfig(Request::GET,   '/^products$/',               ApiProductsList::class),  // показать список всех товаров для разнообразия
 ]);
 
 $apiController = $di->newInstance($class);
